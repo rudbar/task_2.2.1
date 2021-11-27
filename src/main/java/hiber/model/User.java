@@ -5,8 +5,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 public class User {
-   @OneToOne
-   @JoinColumn(name = "car_id")
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "car_id", referencedColumnName = "id")
    private Car car;
 
    @Id
@@ -21,6 +21,24 @@ public class User {
 
    @Column(name = "email")
    private String email;
+
+   @Override
+   public String toString() {
+      return "User{" +
+              "car=" + car +
+              ", id=" + id +
+              ", firstName='" + firstName + '\'' +
+              ", lastName='" + lastName + '\'' +
+              ", email='" + email + '\'' +
+              '}';
+   }
+
+   public User(Car car, String firstName, String lastName, String email) {
+      this.car = car;
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.email = email;
+   }
 
    public User() {}
    
@@ -70,10 +88,5 @@ public class User {
       this.car = car;
    }
 
-   public User(Car car, String firstName, String lastName, String email) {
-      this.car = car;
-      this.firstName = firstName;
-      this.lastName = lastName;
-      this.email = email;
-   }
+
 }
